@@ -29,13 +29,13 @@
             session_start();
 
             if (isset($_POST['submit'])) {
-                // Database credentials
+                
                 $servername = "localhost";
                 $username = "root";
                 $password = "";
                 $dbname = "ims_db";
 
-                // Establish database connection
+                // connect db
                 $conn = new mysqli($servername, $username, $password, $dbname);
 
                 // Check connection
@@ -47,14 +47,14 @@
                 $email = $conn->real_escape_string($_POST['email']);
                 $password = $_POST['password'];
 
-                // Check if the user exists in the database
+                // Check if user exists
                 $sql = "SELECT * FROM users WHERE email = '$email'";
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
                     $user = $result->fetch_assoc();
 
-                    // Verify the password
+                    // Verify password
                     if (password_verify($password, $user['password'])) {
                         // Store user info in the session
                         $_SESSION['user_id'] = $user['id'];

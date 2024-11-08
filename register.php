@@ -31,15 +31,15 @@
             <input type="submit" name="submit" value="Register Now" class="form-btn">
             <p> Already have an account? <a href="login.php"> Login now </a></p>
             <?php
-                // Register system logic
+                // Register
                 if (isset($_POST['submit'])) {
                     // Database credentials
-                    $servername = "localhost"; // Change if using a different host
-                    $username = "root"; // Database username
-                    $password = ""; // Database password
-                    $dbname = "ims_db"; // Database name
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = ""; 
+                    $dbname = "ims_db"; 
 
-                    // Establish database connection
+                    // connect db
                     $conn = new mysqli($servername, $username, $password, $dbname);
 
                     // Check connection
@@ -61,7 +61,7 @@
                     if ($result->num_rows > 0) {
                         echo "<p style='color:red;'>Email already registered. Please use a different email or log in.</p>";
                     } else {
-                        // Insert user data into the database
+                        // Insert data
                         $sql = "INSERT INTO users (first_name, last_name, email, password, user_type) VALUES ('$first_name', '$last_name', '$email', '$password', '$user_type')";
 
                         if ($conn->query($sql) === TRUE) {
@@ -71,7 +71,7 @@
                         }
                     }
 
-                    // Close the database connection
+                    // Close db connection
                     $conn->close();
                 }
             ?>
