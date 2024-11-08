@@ -1,0 +1,128 @@
+/* General Styling */
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
+
+body {
+    position: relative;
+    background-color: #fff;
+}
+
+/* Background and Logo */
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 42%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.logo {
+    padding: 30px 30px 80px;
+    font-size: 17px;
+    color: #eee;
+    font-weight: bold;
+}
+
+/* Main Container */
+.form-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 40px 40px;
+    background-color: #fff;
+    border-radius: 8px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+}
+
+/* Header Section */
+.form-container h1 {
+    font-size: 24px;
+    color: #172b4d;
+}
+
+.form-container p {
+    color: #6b778c;
+    margin-bottom: 20px;
+}
+
+/* Dropdown and Input Styles */
+label {
+    display: block;
+    font-weight: 600;
+    color: #172b4d;
+    margin-bottom: 8px;
+}
+
+select, input, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #dfe1e6;
+    border-radius: 5px;
+    color: #172b4d;
+    margin-bottom: 20px;
+}
+
+/* Options Section */
+.option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background-color 0.2s;
+}
+
+.option i {
+    font-size: 24px;
+    margin-right: 15px;
+    color: #0052cc;
+}
+
+.option h3 {
+    font-size: 16px;
+    margin-bottom: 4px;
+    color: #172b4d;
+}
+
+.option p {
+    font-size: 14px;
+    color: #6b778c;
+    margin: 0;
+}
+
+/* Static Name Field */
+.static-field {
+    background-color: #f4f5f7;
+    padding: 8px;
+    border: 1px solid #dfe1e6;
+    border-radius: 5px;
+    color: #172b4d;
+    margin-bottom: 20px;
+}
+
+/* Submit Button */
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #0052cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #0041a8;
+}

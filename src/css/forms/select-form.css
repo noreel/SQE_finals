@@ -1,0 +1,98 @@
+/* General Styling */
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
+
+body {
+    position: relative;
+    background-color: #fff;
+}
+
+/* Background and Logo */
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 45%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.logo {
+    padding: 30px;
+    font-size: 17px;
+    color: #eee;
+    font-weight: bold;
+}
+
+/* Main Container */
+.form-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 50px 50px;
+    background-color: #fff;
+    border-radius: 8px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+}
+
+.header {
+    font-size: 24px;
+    font-weight: 600;
+    color: #172b4d;
+}
+
+.description {
+    text-align: left;
+    color: #172b4d;
+}
+
+.additional-info {
+    text-align: left;
+    padding: 20px 0px 10px;
+    font-size: 17px;
+    color: #172b4d;
+}
+
+/* Category Card */
+.category-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.category-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.category-card h2 {
+    font-size: 18px;
+    color: #007bff;
+    font-weight: 500;
+}
+
+.category-card p {
+    font-size: 14px;
+    color: #666;
+}
+
+.category-card .arrow {
+    font-size: 18px;
+    color: #007bff;
+}

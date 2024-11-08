@@ -1,0 +1,186 @@
+/* Existing CSS */
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+ }
+ 
+ body {
+    position: relative; 
+ }
+ 
+ .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60.5%;
+    object-fit: cover;
+    z-index: -1; 
+ }
+ 
+ .logo {
+    font-size: 17px;
+    position: relative;
+    color: #eee;
+    font-weight:bold;
+ }
+ 
+ .header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 30px 30px;
+ }
+ 
+ .profile-icon {
+     font-size: 25px;
+     color: #eee;
+     cursor: pointer;
+     position: relative; /* Added for dropdown positioning */
+ }
+ 
+ .search-container {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     min-height: 50vh;
+     padding: 20px;
+ }
+ 
+ .searchText {
+     padding: 20px 0;
+     font-size: 20px;
+     color: #eee;
+     font-weight: bold;
+ }
+ 
+ .search {
+     width: 700px;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     padding: 12px;
+     border-radius: 3px;
+     background: #fff;
+ }
+ 
+ .fa {
+     font-size: 16px;
+     color: #888;
+     margin: .25rem;
+ }
+ 
+ input {
+     flex-grow: 1;
+     margin: 0 0.3rem;
+     font-size: 16px;
+     height: 24px;
+     background-color: #fff;
+     border: none;
+ }
+ 
+ .portal-container {
+      display:flex; 
+      flex-direction :column; 
+      align-items:center; 
+ }
+ .portalText {
+      font-size :17px; 
+      margin-bottom :20px; 
+      color :#4950f6; 
+      font-weight:bold; 
+      margin-left :500px;
+      margin-top :-70px;
+ }
+ .portals {
+      display:flex; 
+      gap :50px;
+ }
+ .portal-button {
+      width :300px;
+      height :150px;
+      display:flex; 
+      align-items:center; 
+      justify-content:center; 
+      cursor:pointer; 
+      border-radius :3px; 
+      transition :background-color 0.3s; 
+      border :2px solid rgb(226,226,226);
+ }
+ .portal-links {
+      display:flex; 
+      flex-direction :column; 
+      align-items:flex-start; 
+      width :100%; 
+      padding :5px; 
+ }
+ .portal-button a {
+      color :#4950f6; 
+      font-size :17px; 
+      font-weight:bold; 
+      margin :10px 10px 0px 10px; 
+ }
+ .portal-button a1 {
+      color :gray; 
+      font-size :15px; 
+      margin :10px 10px 10px 10px; 
+ }
+ .portal-button:hover {
+      box-shadow :0 2px 5px rgba(0,0,0,0.2); 
+ }
+ 
+ .dropdown-content {
+    display: none;
+    position: absolute;
+    right : 0;
+    background-color: #fff; 
+    min-width : 220px;
+    min-height: 140px;
+    box-shadow : 0 2px 5px rgba(0,0,0,0.2); 
+    z-index : 1; 
+ }
+
+ .dropdown-item b1{
+    padding: 10px;
+    font-size: 18px;
+    color: gray;
+    align-items: center;
+ }
+
+ .dropdown-item b2{
+    padding: 10px;
+    font-size: 18px;
+    color: gray;
+    align-items: center;
+ }
+
+ .dropdown-item a{
+    padding: 10px 10px 0px;
+    font-size: 18px;
+    color: #4950f6;
+    font-weight: bold;
+ }
+
+ .dropdown-item a1{
+    padding: 0px 10px 10px;
+    font-size: 15px;
+    color: gray;
+    font-style: italic; 
+ }
+
+ .dropdown-item:hover {
+    background-color:#eee;
+ }
+
+ hr {
+    margin :5px 0;
+ }
+
+ .show {
+    display:block;
+ }
