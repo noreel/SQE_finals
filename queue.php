@@ -4,6 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Dashboard - GRP3.</title>
     <link rel="icon" href="src/img/favicon/favicon-32x32.png" type="image/x-icon"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -309,7 +310,66 @@
                       </div>
                     </div>
                     <p class="card-category">
-                      
+                      <a class="btn btn-primary" href="/ims-main/create.php" role="button">New Client</a>
+                      <br>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Company ID</th>
+                            <th>Created By</th>
+                            <th>Team ID</th>
+                            <th>Status</th>
+                            <th>Resolved By</th>
+                            <th>Description</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php
+                              $servername = "localhost";
+                              $username = "root";
+                              $password = "";
+                              $database = "testdb";
+
+                              //Create connection
+                              $connection = new mysqli($servername, $username, $password, $database);
+
+                              //Check connection
+                              if ($connection->connect_error) {
+                                  die("Connection failed: " . $connection->connect_error);
+                              }
+                              //read all data
+                              $sql = "SELECT * FROM incidents";
+                              $result = $connection->query($sql);
+
+                              if (!$result) {
+                                die("Invalid query:" . $connection->$connect_error);
+                              }
+                              //read data of each row
+                              while($row = $result->fetch_assoc()) {
+                                echo "<tr>
+                                      <td>$row[incident_id]</td>
+                                      <td>$row[company_id]</td>
+                                      <td>$row[created_by]</td>
+                                      <td>$row[team_id]</td>
+                                      <td>$row[status]</td>
+                                      <td>$row[resolved_by]</td>
+                                      <td>$row[description]</td>
+                                      <td>$row[created_at]</td>
+                                      <td>$row[updated_at]</td>
+                                      <td>
+                                          <a class='btn btn-primary btn-sm' href='/ims-main/edit.php?incident_id=$row[incident_id]'>Edit</a> 
+                                          <a class='btn btn-danger btn-sm' href='/ims-main/delete.php?incident_id=$row[incident_id]'>Delete</a>
+                                      </td>
+                                      </tr>
+                                      ";
+                              }
+                          ?>
+                          
+                        </tbody>
+                      </table>
                     </p>
                   </div>
                   <div class="card-body">

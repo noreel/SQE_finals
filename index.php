@@ -42,7 +42,7 @@
 					<a href="#">
 						<img src="src/img/home/grp3ims-dark.png" alt="logo" id="logo-dark">
 					</a>
-					<a href="login.php" class="button-primary auth-button">SignUp/Login</a>
+					<a href="#" class="button-primary auth-button">SignUp/Login</a>
 				</div>
             </div>
         </header>
