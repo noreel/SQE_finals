@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2024 at 07:28 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Generation Time: Nov 22, 2024 at 12:30 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -145,14 +145,24 @@ CREATE TABLE `teams` (
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `user_type` varchar(50) NOT NULL,
   `role_id` int(11) DEFAULT NULL,
   `company_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `password`, `email`, `user_type`, `role_id`, `company_id`, `created_at`, `updated_at`) VALUES
+(1, 'Jon', 'Doe', '$2y$10$QABj2PjkZ/nIuIbn7sCeYuOu60hcLkIcrBcuio8i2XdryIZFK8wPi', 'test@example.us', 'customer', NULL, NULL, '2024-11-07 23:11:59', '2024-11-07 23:11:59'),
+(2, 'João', 'Souza Silva', '$2y$10$UCAojfs3SFZwzEekOT/y9ubhtIuIfVOzhXX249kSydX.9yWeX/yMq', 'teste@exemplo.us', 'admin', NULL, NULL, '2024-11-08 00:30:27', '2024-11-08 00:30:27');
 
 --
 -- Indexes for dumped tables
@@ -222,7 +232,7 @@ ALTER TABLE `teams`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `username` (`first_name`),
   ADD UNIQUE KEY `email` (`email`),
   ADD KEY `role_id` (`role_id`),
   ADD KEY `company_id` (`company_id`);
@@ -283,7 +293,7 @@ ALTER TABLE `teams`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
