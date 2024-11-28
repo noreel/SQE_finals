@@ -18,8 +18,8 @@
     
     <div class="form-container">
         <form action="" method="post">
-            <h3> Help Center </h3>
-            <h2> Login to continue </h2>
+            <h3> Log in </h3>
+            <h2> Log in to continue </h2>
             <input type="email" name="email" required placeholder="Email Address">
             <input type="password" name="password" required placeholder="Password">
             <input type="submit" name="submit" value="Login" class="form-btn">
@@ -30,6 +30,7 @@
 
             if (isset($_POST['submit'])) {
                 
+
                 $servername = "localhost";
                 $username = "root";
                 $password = "";
@@ -57,15 +58,17 @@
                     // Verify password
                     if (password_verify($password, $user['password'])) {
                         // Store user info in the session
-                        $_SESSION['user_id'] = $user['id'];
+                        $_SESSION['user_id'] = $user['user_id'];
                         $_SESSION['user_type'] = $user['user_type'];
                         $_SESSION['first_name'] = $user['first_name'];
+                        $_SESSION['email'] = $user['email'];
 
                         // Redirect based on user type
                         if ($user['user_type'] == 'admin') {
                             header("Location: admin.php");
                             exit();
-                        } else {
+                        } 
+                        else {
                             header("Location: user.php");
                             exit();
                         }

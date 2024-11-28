@@ -1,46 +1,63 @@
 <?php
+    session_start();
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $database = "testdb";
+    $database = "ims_db";
 
     //create connection
     $connection = new mysqli($servername, $username, $password, $database);
 
-    $company_id = "";
-    $created_by = "";
-    $team_id = "";
-    $status = "ongoing"; // Default status
-    $resolved_by = "";
+    $logged_in_firstname = isset($_SESSION['first_name']) ? $_SESSION['first_name'] : '';
+
+    $user_options = '';
+    $sql = "SELECT user_id, first_name FROM users WHERE user_type = 'user'";
+    $result = $connection->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $selected = ($row['first_name'] == $logged_in_firstname) ? 'selected' : '';
+            $user_options .= "<option value='{$row['user_id']}' $selected>{$row['first_name']}</option>";
+        }
+    }
+
+    //$company_id = "";
+    $created_by = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
+    //$team_id = "";
+    $priority_level = "";
+    $status = "pending"; // Default status
+    //$resolved_by = "";
+    $summary = "";
     $description = "";
+    $affected_organization = "";
     $created_at = "";
-    $updated_at = "";
+    //$updated_at = "";
 
     $errorMessage = "";
     $successMessage = "";
 
     // Check if form is submitted
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $company_id = htmlspecialchars($_POST["company_id"]);
         $created_by = htmlspecialchars($_POST["created_by"]);
-        $team_id = htmlspecialchars($_POST["team_id"]);
-        $status = htmlspecialchars($_POST["status"]);
-        $resolved_by = htmlspecialchars($_POST["resolved_by"]);
+        $priority_level = htmlspecialchars($_POST["priority_level"]);
+        //$status = htmlspecialchars($_POST["status"]);
+        //$resolved_by = htmlspecialchars($_POST["resolved_by"]);
+        $summary = htmlspecialchars($_POST["summary"]);
         $description = htmlspecialchars($_POST["description"]);
+        $affected_organization = htmlspecialchars($_POST["affected_organization"]);
         $created_at = htmlspecialchars($_POST["created_at"]);
-        $updated_at = htmlspecialchars($_POST["updated_at"]);
+        //$updated_at = htmlspecialchars($_POST["updated_at"]);
 
         do {
-            if ( empty($company_id) || empty($created_by) || empty($team_id) || empty($status) || empty($resolved_by) || empty($description) || empty($created_at) || empty($updated_at))
+            if ( empty($created_by) || empty($priority_level) || empty($summary) || empty($description) || empty($affected_organization)) 
             {
                 $errorMessage = "All fields are requried";
                 break;
             }
 
-            //Add client fields
-
-            $sql = "INSERT INTO incidents (company_id, created_by, team_id, status, resolved_by, description, created_at, updated_at)" .
-                    "VALUES ('$company_id', '$created_by', '$team_id', '$status', '$resolved_by', '$description', '$created_at', '$updated_at')";
+            //Add new incident to table
+            $sql = "INSERT INTO incidents (created_by, priority_level, status, summary, description, affected_organization)" .
+                    "VALUES ( '$created_by', '$priority_level', '$status', '$summary', '$description', '$affected_organization')";
             $result = $connection->query($sql);
 
             if (!$result) {
@@ -48,18 +65,20 @@
                 break;
             }
 
-            $company_id = "";
+
             $created_by = "";
-            $team_id = "";
+            $priority_level = "";
             $status = ""; 
-            $resolved_by = "";
+            //$resolved_by = "";
+            $summary = "";
             $description = "";
+            $affected_organization = "";
             $created_at = "";
-            $updated_at = "";
+            //$updated_at = "";
 
             $successMessage = "Client Added Successfully";
 
-            header("location:/ims-main/queue.php");
+            header("location:user.php");
             exit;
             
         } while (false);
@@ -80,10 +99,10 @@
     <!-- Other required links and scripts here -->
   </head>
 <body>
-      <div class="container my-5">
-        <h2>New Client</h2>
+    <div class="container my-5 ">
+        <h2>New Issue</h2>
         <?php
-            if ( !empty($errorMessage)) {
+            if (!empty($errorMessage)) {
                 echo "
                 <div class='alert alert-warning alert-dismissible fade show role='alert'>
                     <strong>$errorMessage</strong>
@@ -93,27 +112,40 @@
             }
         ?>
         <form method="post">
-            <div class="row mb-3">
+            <!-- <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Company ID</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="company_id" value="<?php echo $company_id; ?>">
                 </div>
-            </div>
+            </div> -->
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Created By</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="created_by" value="<?php echo $created_by; ?>">
+                    <select id="created_by" name="created_by" class="form-select">
+                        <?php echo $user_options; ?>
+                    </select>
                 </div>
             </div>
 
-            <div class="row mb-3">
+            <!-- <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Team ID</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="team_id" value="<?php echo $team_id; ?>">
                 </div>
-            </div>
+            </div> -->
 
             <div class="row mb-3">
+                <label for="priority_level" class="col-sm-3 col-form-label">Select Priority</label>
+                <div class="col-sm-6">
+                    <select id="priority_level" name="priority_level" class="form-select">
+                        <option value="low" <?php echo $status == 'low' ? 'selected' : ''; ?>>Low</option>
+                        <option value="medium" <?php echo $status == 'medium' ? 'selected' : ''; ?>>Medium</option>
+                        <option value="high" <?php echo $status == 'high' ? 'selected' : ''; ?>>High</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- <div class="row mb-3">
                 <label for="status" class="col-sm-3 col-form-label">Select Status:</label>
                 <div class="col-sm-6">
                     <select id="status" name="status" class="form-select">
@@ -122,12 +154,19 @@
                         <option value="open" <?php echo $status == 'open' ? 'selected' : ''; ?>>Open</option>
                     </select>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="row mb-3">
+            <!-- <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Resolved By</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="resolved_by" value="<?php echo $resolved_by; ?>">
+                </div>
+            </div> -->
+
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Summary</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="summary" value="<?php echo $summary; ?>">
                 </div>
             </div>
 
@@ -139,18 +178,25 @@
             </div>
 
             <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Affected Organization</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="affected_organization" value="<?php echo $affected_organization; ?>">
+                </div>
+            </div>
+
+            <!-- <div class="row mb-3">
                 <label for="created_at" class="col-sm-3 col-form-label">Created At:</label>
                 <div class="col-sm-6">
                     <input type="date" id="created_at" name="created_at" class="form-control" value="<?php echo $created_at; ?>" required>
                 </div>
-            </div>  
+            </div>   -->
             
-            <div class="row mb-3">
+            <!-- <div class="row mb-3">
                 <label for="updated_at" class="col-sm-3 col-form-label">Updated At:</label>
                 <div class="col-sm-6">
                     <input type="date" id="updated_at" name="updated_at" class="form-control" value="<?php echo $updated_at; ?>" required>
                 </div>
-            </div> 
+            </div>  -->
 
             <?php
                 if ( !empty($successMessage)) {
@@ -168,7 +214,7 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 <div class="col-sm-3 d-grid">
-                    <a class="btn btn-outline-primary" href="/ims-main/incident.php" role="button">Cancel</a>
+                    <a class="btn btn-outline-primary" href="user.php" role="button">Cancel</a>
                 </div>
             </div>  
         </form>

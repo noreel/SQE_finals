@@ -18,14 +18,14 @@
 
     <div class="form-container">
         <form action="" method="post">
-            <h3> Help Center </h3>
+            <h3> Sign Up </h3>
             <h2> Enter your Information to register </h2>
             <input type="text" name="first_name" required placeholder="First Name">
             <input type="text" name="last_name" required placeholder="Last Name">
             <input type="email" name="email" required placeholder="Email Address">
             <input type="password" name="password" required placeholder="Password">
             <select name="user_type">
-                <option value="customer">Customer</option>
+                <option value="user">User</option>
                 <option value="admin">Admin</option>
             </select>
             <input type="submit" name="submit" value="Register Now" class="form-btn">

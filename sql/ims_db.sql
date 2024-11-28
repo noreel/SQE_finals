@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2024 at 12:30 PM
+-- Generation Time: Nov 28, 2024 at 07:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -47,12 +47,24 @@ CREATE TABLE `incidents` (
   `company_id` int(11) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `team_id` int(11) DEFAULT NULL,
-  `status` enum('Open','In Progress','Resolved') DEFAULT 'Open',
+  `priority_level` varchar(255) NOT NULL,
+  `status` enum('Pending','Ongoing','Resolved') DEFAULT 'Pending',
   `resolved_by` int(11) DEFAULT NULL,
+  `summary` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `affected_organization` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `incidents`
+--
+
+INSERT INTO `incidents` (`incident_id`, `company_id`, `created_by`, `team_id`, `priority_level`, `status`, `resolved_by`, `summary`, `description`, `affected_organization`, `created_at`, `updated_at`) VALUES
+(1, NULL, 1, NULL, 'low', 'Resolved', 3, 'slow internet', 'doesnt work', 'Human Resource', '2024-11-28 09:48:18', '2024-11-28 09:49:19'),
+(2, NULL, 4, NULL, 'low', 'Resolved', 3, 'sample req', 'wifi brekit', 'Accounting', '2024-11-28 09:52:40', '2024-11-28 13:09:27'),
+(3, NULL, 1, NULL, 'low', 'Pending', 3, 'slow internet', 'slow internet when surfing and logging in', 'Human Resource', '2024-11-28 10:51:48', '2024-11-28 10:55:08');
 
 -- --------------------------------------------------------
 
@@ -161,8 +173,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `password`, `email`, `user_type`, `role_id`, `company_id`, `created_at`, `updated_at`) VALUES
-(1, 'Jon', 'Doe', '$2y$10$QABj2PjkZ/nIuIbn7sCeYuOu60hcLkIcrBcuio8i2XdryIZFK8wPi', 'test@example.us', 'customer', NULL, NULL, '2024-11-07 23:11:59', '2024-11-07 23:11:59'),
-(2, 'João', 'Souza Silva', '$2y$10$UCAojfs3SFZwzEekOT/y9ubhtIuIfVOzhXX249kSydX.9yWeX/yMq', 'teste@exemplo.us', 'admin', NULL, NULL, '2024-11-08 00:30:27', '2024-11-08 00:30:27');
+(1, 'Jon', 'Doe', '$2y$10$QABj2PjkZ/nIuIbn7sCeYuOu60hcLkIcrBcuio8i2XdryIZFK8wPi', 'test@example.us', 'user', NULL, NULL, '2024-11-07 23:11:59', '2024-11-27 01:44:34'),
+(2, 'João', 'Souza Silva', '$2y$10$UCAojfs3SFZwzEekOT/y9ubhtIuIfVOzhXX249kSydX.9yWeX/yMq', 'teste@exemplo.us', 'admin', NULL, NULL, '2024-11-08 00:30:27', '2024-11-08 00:30:27'),
+(3, 'Gottfried', 'Leibniz', '$2y$10$3teGNzrc9FB2.NntLwoJMuSM7ZvkK4scJX3JM/22VvxofxpzRFaNy', 'test@beispiel.de', 'admin', NULL, NULL, '2024-11-27 02:01:31', '2024-11-27 02:01:31'),
+(4, 'lols', 'lils', '$2y$10$0JIVOfQfzJtfKBlrLC5WJO5NtGpipi.7sW7S4LC.dUB9NiS/Q1.2e', 'lolo@gmail.com', 'user', NULL, NULL, '2024-11-28 01:51:57', '2024-11-28 01:51:57');
 
 --
 -- Indexes for dumped tables
@@ -251,7 +265,7 @@ ALTER TABLE `companies`
 -- AUTO_INCREMENT for table `incidents`
 --
 ALTER TABLE `incidents`
-  MODIFY `incident_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `incident_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -293,7 +307,7 @@ ALTER TABLE `teams`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
