@@ -353,9 +353,6 @@
                     </div>
                     <p class="card-category">
                       <br>
-                      <a class="btn btn-primary" href="create.php" role="button">New Issue</a>
-                      <br>
-                      <br>
                       <div style="overflow-x:auto;">
                         <table class="table">
                           <thead>

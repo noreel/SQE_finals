@@ -62,8 +62,9 @@
 
 
         $created_by = $row["creator_name"];
-        $status = $row["status"];
         $resolved_by = $row["resolved_by"];
+        $priority_level = $row["priority_level"];
+        $status = $row["status"];
         $description = $row["description"];
         $created_at = $row["created_at"];
         $updated_at = $row["updated_at"];
@@ -71,6 +72,7 @@
         // POST request - Update incident
         $incident_id = $_POST["incident_id"];
         $created_by = $_POST["created_by"];
+        $priority_level = $_POST["priority_level"];
         $status = $_POST["status"];
         $resolved_by = $_POST["resolved_by"];
         $description = $_POST["description"];
@@ -84,6 +86,7 @@
             }
             
             $sql = "UPDATE incidents SET 
+            priority_level = '$priority_level',
             status = '$status', 
             resolved_by = '$resolved_by', 
             updated_at = NOW() 
@@ -135,7 +138,16 @@
                     <input type="text" class="form-control" name="created_by" value="<?php echo $created_by; ?>" readonly>
                 </div>
             </div>
-
+            <div class="row mb-3">
+                <label for="priority_level" class="col-sm-3 col-form-label">Select Priority</label>
+                <div class="col-sm-6">
+                    <select id="priority_level" name="priority_level" class="form-select">
+                        <option value="low" <?php echo $priority_level == 'low' ? 'selected' : ''; ?>>Low</option>
+                        <option value="medium" <?php echo $priority_level == 'medium' ? 'selected' : ''; ?>>Medium</option>
+                        <option value="high" <?php echo $priority_level == 'high' ? 'selected' : ''; ?>>High</option>
+                    </select>
+                </div>
+            </div>
             <div class="row mb-3">
                 <label for="status" class="col-sm-3 col-form-label">Select Status:</label>
                 <div class="col-sm-6">

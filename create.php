@@ -24,13 +24,13 @@
     //$company_id = "";
     $created_by = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
     //$team_id = "";
-    $priority_level = "";
+    $priority_level = "low";
     $status = "pending"; // Default status
     //$resolved_by = "";
     $summary = "";
     $description = "";
     $affected_organization = "";
-    $created_at = "";
+    $created_at = date("Y-m-d H:i:s");
     //$updated_at = "";
 
     $errorMessage = "";
@@ -38,51 +38,30 @@
 
     // Check if form is submitted
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $created_by = htmlspecialchars($_POST["created_by"]);
-        $priority_level = htmlspecialchars($_POST["priority_level"]);
-        //$status = htmlspecialchars($_POST["status"]);
-        //$resolved_by = htmlspecialchars($_POST["resolved_by"]);
-        $summary = htmlspecialchars($_POST["summary"]);
-        $description = htmlspecialchars($_POST["description"]);
-        $affected_organization = htmlspecialchars($_POST["affected_organization"]);
-        $created_at = htmlspecialchars($_POST["created_at"]);
-        //$updated_at = htmlspecialchars($_POST["updated_at"]);
-
+        $created_by = trim($_POST["created_by"]);
+        $summary = trim($_POST["summary"]);
+        $description = trim($_POST["description"]);
+        $affected_organization = trim($_POST["affected_organization"]);
+    
         do {
-            if ( empty($created_by) || empty($priority_level) || empty($summary) || empty($description) || empty($affected_organization)) 
-            {
-                $errorMessage = "All fields are requried";
+            if (empty(trim($created_by)) || empty(trim($priority_level)) || empty(trim($summary)) || empty(trim($description)) || empty(trim($affected_organization))) {
+                $errorMessage = "All fields are required.";
                 break;
             }
-
-            //Add new incident to table
-            $sql = "INSERT INTO incidents (created_by, priority_level, status, summary, description, affected_organization)" .
-                    "VALUES ( '$created_by', '$priority_level', '$status', '$summary', '$description', '$affected_organization')";
-            $result = $connection->query($sql);
-
-            if (!$result) {
-                $errorMessage = "Invalid query:" . $connection->error;
+    
+            $stmt = $connection->prepare("INSERT INTO incidents (created_by, priority_level, status, summary, description, affected_organization) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssss", $created_by, $priority_level, $status, $summary, $description, $affected_organization);
+    
+            if (!$stmt->execute()) {
+                $errorMessage = "Database error: " . $stmt->error;
                 break;
             }
-
-
-            $created_by = "";
-            $priority_level = "";
-            $status = ""; 
-            //$resolved_by = "";
-            $summary = "";
-            $description = "";
-            $affected_organization = "";
-            $created_at = "";
-            //$updated_at = "";
-
-            $successMessage = "Client Added Successfully";
-
-            header("location:user.php");
+    
+            $stmt->close();
+            $_SESSION['successMessage'] = "Client added successfully";
+            header("location: user.php");
             exit;
-            
         } while (false);
-        
     }
 ?>
 
@@ -133,17 +112,6 @@
                     <input type="text" class="form-control" name="team_id" value="<?php echo $team_id; ?>">
                 </div>
             </div> -->
-
-            <div class="row mb-3">
-                <label for="priority_level" class="col-sm-3 col-form-label">Select Priority</label>
-                <div class="col-sm-6">
-                    <select id="priority_level" name="priority_level" class="form-select">
-                        <option value="low" <?php echo $status == 'low' ? 'selected' : ''; ?>>Low</option>
-                        <option value="medium" <?php echo $status == 'medium' ? 'selected' : ''; ?>>Medium</option>
-                        <option value="high" <?php echo $status == 'high' ? 'selected' : ''; ?>>High</option>
-                    </select>
-                </div>
-            </div>
 
             <!-- <div class="row mb-3">
                 <label for="status" class="col-sm-3 col-form-label">Select Status:</label>
