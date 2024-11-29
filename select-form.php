@@ -1,3 +1,33 @@
+<?php
+  session_start();
+
+  // Check if the user is logged in
+  if (!isset($_SESSION['user_id'])) {
+      // Redirect to login page if not logged in
+      header("Location: login.php");
+      exit();
+  }
+
+  // Get user attributes from session
+  $user_type = $_SESSION['user_type'];
+  $first_name = $_SESSION['first_name'];
+  $email = $_SESSION['email'];
+  $user_id = $_SESSION['user_id'];
+
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $database = "ims_db";
+
+  // Create connection
+  $connection = new mysqli($servername, $username, $password, $database);
+
+  // Check connection
+  if ($connection->connect_error) {
+      die("Connection failed: " . $connection->connect_error);
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +57,7 @@
         </div>
 
         <!-- Categories -->
-        <div class="category-card">
+        <div class="category-card" onclick="location.href='select-issue.php'">
             <div>
                 <h2>Common Requests</h2>
                 <p>Get IT help, Request a new account, Report a system problem, Report broken hardware</p>
